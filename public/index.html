@@ -2,134 +2,141 @@
 <!-- BURGIR PARADISE-->
 <html lang="en">
 
-   <head>
-       <title>Burgir Paradise</title>
-       <meta charset="utf-8"/>
-   </head>
+<head>
+    <title>Burgir Paradise</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 
 <body>
-<header>
-    <h1> Welcome to Burgir Paradise </h1>
-</header>
+    <header id="headersection">
+        <img src="https://thatssotampa.com/wp-content/uploads/2023/03/BellaBrava_Header-1024x576.webp">
+        <h1> Welcome to Burgir Paradise </h1>
+    </header>
 
-<nav> Menu items </nav>
+    <nav> Menu items </nav>
 
-<main>
-   
-    <section>
-        <!-- OUR BURGERS -->
-        <h2> Our Burgers </h2>
-        <p> Here you select your burger for delivery! </p>
+    <main>
+        <section id="ourburgerssection">
+            <!-- OUR BURGERS -->
+            <h2> Our Burgers </h2>
+            <p> Here you select your burger for delivery! </p>
 
-        <div style="display: inline-block;">
-            <h3>The Beast Burger</h3>
-            <img src="https://www.solopress.com/blog/wp-content/uploads/2014/09/shutterstock_334960748.jpg" 
-            alt="The Beast Burger" title="The Beast Burger" style="width: 200px">
+            <div style="display: inline-block">
+                <h3>The Beast Burger</h3>
+                <img src="https://www.solopress.com/blog/wp-content/uploads/2014/09/shutterstock_334960748.jpg"
+                    alt="The Beast Burger" title="The Beast Burger" style="width: 200px">
+                <p>Our largest burger for our BEASTS</p>
 
-            <ul>
-                <li> Egg </li>
-                <li> Milk protein </li>
-                <li> Lactose</li>
-            </ul>
-        </div>
-
-        <div style="display: inline-block">
-            <h3>The Monster Burger</h3>
-            <img src="https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/416aaa9d7ed7b101e2d2672ab5d91e9b.jpg" 
-            alt="The Monster Burger" title="The Monster Burger" style="width: 200px">
-    
-            <ul>
-                <li> Sesame seeds </li>
-            </ul>
-        </div>
-
-        <div style="display: inline-block";>
-            <h3>The Murder Burger</h3>
-            <img src="https://emvwr2994ad.exactdn.com/wp-content/uploads/2014/11/burger-restaurants-stockholm-featured.jpg" 
-            alt="The Murder Burger" title="The Murder Burger" style="width: 200px">
-        
-            <ul>
-                <li> Egg </li>
-                <li> Peanuts </li>
-            </ul>
+                <ul class="allergylist">
+                    <li> Egg </li>
+                    <li> Milk protein </li>
+                    <li> Lactose</li>
+                </ul>
             </div>
 
-    </section>
+            <div style="display: inline-block">
+                <h3>The Monster Burger</h3>
+                <img src="https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/416aaa9d7ed7b101e2d2672ab5d91e9b.jpg"
+                    alt="The Monster Burger" title="The Monster Burger" style="width: 200px">
+                <p>Our burger with ONION RINGS</p>
 
-    <!-- INPUT CUSTOMER INFORMATION -->
-    <section>
-        <h2> Tell us about you </h2>
-        <p> We need some of your information to be able to make the delivery.
-            Provide it below! </p>
+                <ul class="allergylist">
+                    <li> Sesame seeds </li>
+                </ul>
+            </div>
 
-        <!-- FORM -->
-        <form>
-            <fieldset>
-            <p>
-                <label for="firstlastname">Full name</label><br>
-                <input type="text" id="firstlastname" name="fln" required="required" placeholder="First and last name">
-            </p>
-            <p>
-                <label for="email">E-mail</label><br>
-                <input type="email" id="email" name="em" required="required" placeholder="E-mail address">
-            </p>
-            <p>
-                <label for="streetname">Street</label><br>
-                <input type="text" id="streetname" name="streetn" placeholder="Street name">
-            </p>
-            <p>
-                <label for="housenumber">House</label><br>
-                <input type="number" id="housenumber" name="housenum" placeholder="House number">
-            </p>
-            <p>
-                <label for="paymentmethod">Payment method</label><be>
-                <select id="paymentmethod" name="pm">
-                    <option selected="selected">Credit/debit card</option>
-                    <option>Swish</option>
-                    <option>Pay at dropoff</option>
-                    <option>Springnota</option>
-                </select>
-            </p>
+            <div style="display: inline-block">
+                <h3>The Murder Burger</h3>
+                <img src="https://emvwr2994ad.exactdn.com/wp-content/uploads/2014/11/burger-restaurants-stockholm-featured.jpg"
+                    alt="The Murder Burger" title="The Murder Burger" style="width: 200px">
+                <p>Our spiciest burger for our SPICE lovers</p>
 
-            <p>
-            Gender
-            </p>
+                <ul class="allergylist">
+                    <li> Egg </li>
+                    <li> Peanuts </li>
+                </ul>
+            </div>
+        </section>
 
-            <p>
-            <input type="radio" id="male" name="gender" value="male" />
-            <label for="male">Male</label>
-            </p>
+        <!-- INPUT CUSTOMER INFORMATION -->
+        <section>
+            <span id="customerinfosection">
+                <h2> Tell us about you </h2>
+                <p> We need some of your information to be able to make the delivery.
+                    Provide it below! </p>
 
-            <p>
-            <input type="radio" id="female" name="gender" value="female" />
-            <label for="female">Female</label>
-            </p>
+                <!-- FORM -->
+                <form>
+                    <fieldset>
+                        <p>
+                            <label for="firstlastname">Full name</label><br>
+                            <input type="text" id="firstlastname" name="fln" required="required"
+                                placeholder="First and last name">
+                        </p>
+                        <p>
+                            <label for="email">E-mail</label><br>
+                            <input type="email" id="email" name="em" required="required" placeholder="E-mail address">
+                        </p>
+                        <p>
+                            <label for="streetname">Street</label><br>
+                            <input type="text" id="streetname" name="streetn" placeholder="Street name">
+                        </p>
+                        <p>
+                            <label for="housenumber">House</label><br>
+                            <input type="number" id="housenumber" name="housenum" placeholder="House number">
+                        </p>
+                        <p>
+                            <label for="paymentmethod">Payment method</label>
+                            <select id="paymentmethod" name="pm">
+                                <option selected="selected">Credit/debit card</option>
+                                <option>Swish</option>
+                                <option>Pay at dropoff</option>
+                                <option>Springnota</option>
+                            </select>
+                        </p>
 
-            <p>
-            <input type="radio" id="nonbinary" name="gender" value="nonbinary" />
-            <label for="nonbinary">Non-binary</label>
-            </p>
+                        <p>
+                            Gender
+                        </p>
 
-            <p>
-            <input type="radio" id="other" name="gender" value="other" />
-            <label for="other">Other</label>
-            </p>
+                        <p>
+                            <input type="radio" id="male" name="gender" value="male" />
+                            <label for="male">Male</label>
+                        </p>
 
-            </fieldset>
-        </form>
-    </section>
+                        <p>
+                            <input type="radio" id="female" name="gender" value="female" />
+                            <label for="female">Female</label>
+                        </p>
 
-    <button type="submit">
-        <img src="https://static.vecteezy.com/system/resources/previews/024/277/079/original/hamburger-fast-food-clipart-illustration-vector.jpg" style="width: 25px">
-        Place my order!
-    </button>
+                        <p>
+                            <input type="radio" id="nonbinary" name="gender" value="nonbinary" />
+                            <label for="nonbinary">Non-binary</label>
+                        </p>
 
-</main>
+                        <p>
+                            <input type="radio" id="other" name="gender" value="other" />
+                            <label for="other">Other</label>
+                        </p>
 
-<hr>
-<footer>
-    &copy; BurgirParadise - Plz dont copyright me
-</footer>
+                    </fieldset>
+                    <button type="submit">
+                        <img src="https://static.vecteezy.com/system/resources/previews/024/277/079/original/hamburger-fast-food-clipart-illustration-vector.jpg"
+                            style="width: 25px">
+                        Place my order!
+                    </button>
+                </form>
+            </span>
+        </section>
+
+    </main>
+
+    <hr>
+    <footer>
+        &copy; BurgirParadise - Plz dont copyright me
+    </footer>
 
 </body>
+
 </html>
