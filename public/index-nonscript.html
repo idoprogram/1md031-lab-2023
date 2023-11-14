@@ -1,20 +1,16 @@
-<template>
-<!-- 
-  <div>
-    <div>
-      <h1>Burgers</h1>
-      <Burger v-for="burger in burgers"
-              v-bind:burger="burger" 
-              v-bind:key="burger.name"/>
-    </div>
-    <div id="map" v-on:click="addOrder">
-      click here
-    </div>
-  </div>
-  -->
+<!DOCTYPE HTML>
+<!-- BURGIR PARADISE-->
+<html lang="en">
 
+<head>
+    <title>Burgir Paradise</title>
+    <meta charset="utf-8" />
+    <!--<link rel="stylesheet" href="reset.css">-->
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 
-  <header id="headersection">
+<body>
+    <header id="headersection">
         <img src="https://thatssotampa.com/wp-content/uploads/2023/03/BellaBrava_Header-1024x576.webp">
         <h1> Welcome to Burgir Paradise </h1>
     </header>
@@ -142,144 +138,6 @@
         &copy; BurgirParadise - Plz dont copyright me
     </footer>
 
-</template>
+</body>
 
-<script>
-import Burger from '../components/OneBurger.vue'
-import io from 'socket.io-client'
-
-const socket = io();
-
-function MenuItem(nmpr, url, kl, glu, lac) {
-  this.name = nmpr;
-  this.URL = url;
-  this.kCal = kl;
-  this.gluten = glu;
-  this.lactose = lac;
-}
-
-const burgerArray = [
-  new MenuItem("The Beast Burger", "TBB", 360, true, true),
-  new MenuItem("The Murder Burger", "TMB", 400, false, false),
-  new MenuItem("The Monster Burger", "TMB", 500, true, true)]
-  
-  // console.log(burgerArray)
-  
-  export default {
-  name: 'HomeView',
-  components: {
-    Burger
-  },
-  data: function () {
-    return {
-      burgers: burgerArray
-    }
-  },
-  methods: {
-    getOrderNumber: function () {
-      return Math.floor(Math.random()*100000);
-    },
-    addOrder: function (event) {
-      var offset = {x: event.currentTarget.getBoundingClientRect().left,
-                    y: event.currentTarget.getBoundingClientRect().top};
-      socket.emit("addOrder", { orderId: this.getOrderNumber(),
-                                details: { x: event.clientX - 10 - offset.x,
-                                           y: event.clientY - 10 - offset.y },
-                                orderItems: ["Beans", "Curry"]
-                              }
-                 );
-    }
-  }
-}
-</script>
-
-<style>
-@import 'https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap';
-
-body {
-    font-family: oswald;
-}
-
-/*
-#map {
-  width: 300px;
-  height: 300px;
-  background-color: red;
-}
-*/
-
-#ourburgerssection {
-    color: white;
-    background-color: black;
-    margin: 10px;
-    border: 4px dotted white;
-    padding: 8px;
-}
-
-#customerinfosection {
-    color: black;
-    background-color: white;
-    margin: 10px;
-    border: 4px dotted black;
-    padding: 8px;
-}
-
-.allergylist {
-    font-weight: bold;
-}
-
-button:hover {
-    background-color: lightgrey;
-    cursor: pointer;
-    border: none;
-}
-
-/* section {
-    margin: 10px;
-    border: 4px dotted white;
-    padding: 8px;
-} */
-
-button {
-    margin-top: 20px;
-}
-
-div {
-    margin: 2px;
-}
-
-#headersection {
-    margin: 15px;
-    height: 200px;
-    overflow: hidden;
-}
-
-header > img {
-    opacity: 0.7;
-    width: 100%;
-    height: auto;
-}
-
-header > h1 {
-    position: absolute;
-    width: 100%;
-    top: 50px;
-    left: 0px;
-
-    text-align: center;
-}
-
-.wrapper {
-    display: grid;
-    grid-gap: 2%;
-    grid-template-columns: 32% 32% 32%;
-}
-
-.box {
-    background-color: darkgray;
-    color: white;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-</style>
+</html>
