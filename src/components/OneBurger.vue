@@ -1,18 +1,13 @@
   <template>
-    <div>
-      {{ burger.name }} {{ burger.kCal }}
-    </div>
-    
-    <div class="box beastburger">
-      <h3>The Beast Burger</h3>
-      <img src="https://www.solopress.com/blog/wp-content/uploads/2014/09/shutterstock_334960748.jpg"
-        alt="The Beast Burger" title="The Beast Burger" style="width: 100%">
-      <p>Our largest burger for our BEASTS</p>
-
-      <ul class="allergylist">
-        <li> Egg </li>
-        <li> Milk protein </li>
-        <li> Lactose</li>
+    <div class="box">
+      <h3>{{ burger.name }}</h3>
+      <img v-bind:src="burger.URL" style="width: 100%">
+      <p>{{ burger.description }}</p>
+      <p>Calories: {{ burger.kCal }}</p>
+      <p>Contains allergens:</p>
+      <ul v-if="burger.gluten == true || burger.lactose == true" class="allergylist">
+        <li v-if="burger.gluten == true"> Gluten </li>
+        <li v-if="burger.lactose == true"> Lactose </li>
       </ul>
     </div>
   </template>
@@ -37,27 +32,15 @@
 
   @import 'https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap';
 
-  body {
-    font-family: oswald;
-  }
-
-
   .allergylist {
     font-weight: bold;
   }
 
-
   div {
-    margin: 2px;
+    margin: 2 px;
   }
 
-  .wrapper {
-    display: grid;
-    grid-gap: 2%;
-    grid-template-columns: 32% 32% 32%;
-  }
-
-. box {
+ .box {
     background-color: darkgray;
     color: white;
     border-radius: 5px;

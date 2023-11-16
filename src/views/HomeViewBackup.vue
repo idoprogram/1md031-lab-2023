@@ -2,11 +2,10 @@
 <!-- 
   <div>
     <div>
-      <h1>Burgers</h1>
-      <Burger v-for="burger in burgers"
+        <h1>Burgers</h1>
+        <Burger v-for="burger in burgers"
               v-bind:burger="burger" 
-              v-bind:key="burger.name" 
-              v-bind:URL="burger.img/>
+              v-bind:key="burger.name"/>
     </div>
     <div id="map" v-on:click="addOrder">
       click here
@@ -14,7 +13,8 @@
   </div>
   -->
 
-    <header id="headersection">
+
+  <header id="headersection">
         <img src="https://thatssotampa.com/wp-content/uploads/2023/03/BellaBrava_Header-1024x576.webp">
         <h1> Welcome to Burgir Paradise </h1>
     </header>
@@ -22,17 +22,49 @@
     <nav> Menu items </nav>
 
     <main>
-      <section id="ourburgerssection">
-          <!-- OUR BURGERS -->
-          <h2> Our Burgers </h2>
-          <p> Here you select your burger for delivery! </p>
+        <section id="ourburgerssection">
+            <!-- OUR BURGERS -->
+            <h2> Our Burgers </h2>
+            <p> Here you select your burger for delivery! </p>
 
-          <div class="wrapper">
-            <Burger v-for="burger in burgers" 
-                    v-bind:burger="burger" 
-                    v-bind:key="burger.name" />
-          </div>
-      </section>
+            <div class="wrapper">
+                <div>
+                    <h3>The Beast Burger</h3>
+                    <img src="https://www.solopress.com/blog/wp-content/uploads/2014/09/shutterstock_334960748.jpg"
+                        alt="The Beast Burger" title="The Beast Burger" style="width: 100%">
+                    <p>Our largest burger for our BEASTS</p>
+
+                    <ul class="allergylist">
+                        <li> Egg </li>
+                        <li> Milk protein </li>
+                        <li> Lactose</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>The Monster Burger</h3>
+                    <img src="https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/416aaa9d7ed7b101e2d2672ab5d91e9b.jpg"
+                        alt="The Monster Burger" title="The Monster Burger" style="width: 100%">
+                    <p>Our burger with ONION RINGS</p>
+
+                    <ul class="allergylist">
+                        <li> Sesame seeds </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>The Murder Burger</h3>
+                    <img src="https://emvwr2994ad.exactdn.com/wp-content/uploads/2014/11/burger-restaurants-stockholm-featured.jpg"
+                        alt="The Murder Burger" title="The Murder Burger" style="width: 100%">
+                    <p>Our spiciest burger for our SPICE lovers</p>
+
+                    <ul class="allergylist">
+                        <li> Egg </li>
+                        <li> Peanuts </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
         <!-- INPUT CUSTOMER INFORMATION -->
         <section id="customerinfosection">
@@ -131,9 +163,11 @@ const burgerArray = [
   new MenuItem("The Beast Burger", "https://www.solopress.com/blog/wp-content/uploads/2014/09/shutterstock_334960748.jpg",
    360, "Our largest burger for our BEASTS" ,true, true),
   new MenuItem("The Murder Burger", "https://emvwr2994ad.exactdn.com/wp-content/uploads/2014/11/burger-restaurants-stockholm-featured.jpg",
-   400, "Our spiciest burger for our SPICE lovers", true, false),
+   400, "Our spiciest burger for our SPICE lovers", false, false),
   new MenuItem("The Monster Burger", "https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/416aaa9d7ed7b101e2d2672ab5d91e9b.jpg",
-   500, "Our burger with ONION RINGS", false, false)]
+   500, "Our burger with ONION RINGS", true, true)]
+  
+  // console.log(burgerArray)
   
   export default {
   name: 'HomeView',
