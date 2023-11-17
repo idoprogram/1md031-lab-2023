@@ -1,3 +1,76 @@
+<script>
+import Burger from '../components/OneBurger.vue'
+import io from 'socket.io-client'
+import menu from '../assets/menu.json'
+
+const socket = io();
+
+/* function MenuItem(nmpr, url, kl, desc, glu, lac) {
+  this.name = nmpr;
+  this.URL = url;
+  this.kCal = kl;
+  this.description = desc;
+  this.gluten = glu;
+  this.lactose = lac;
+} */
+
+/* const burgerArray = [
+  new MenuItem("The Beast Burger", "https://www.solopress.com/blog/wp-content/uploads/2014/09/shutterstock_334960748.jpg",
+   360, "Our largest burger for our BEASTS" ,true, true),
+  new MenuItem("The Murder Burger", "https://emvwr2994ad.exactdn.com/wp-content/uploads/2014/11/burger-restaurants-stockholm-featured.jpg",
+   400, "Our spiciest burger for our SPICE lovers", true, false),
+  new MenuItem("The Monster Burger", "https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/416aaa9d7ed7b101e2d2672ab5d91e9b.jpg",
+   500, "Our burger with ONION RINGS", false, false)] */
+
+const burgerArray = menu;
+
+  export default {
+  name: 'HomeView',
+  components: {
+    Burger
+  },
+  data: function () {
+    return {
+      burgers: burgerArray,
+      fln: '',
+      em: '',
+      gender: '',
+      streetn: '',
+      housenum: '',
+      pm: 'Credit/debit card',      
+      orderedBurgers: {},
+    }
+  },
+  methods: {
+    getOrderNumber: function () {
+      return Math.floor(Math.random()*100000);
+    },
+    addOrder: function (event) {
+      var offset = {x: event.currentTarget.getBoundingClientRect().left,
+                    y: event.currentTarget.getBoundingClientRect().top};
+      socket.emit("addOrder", { orderId: this.getOrderNumber(),
+                                details: { x: event.clientX - 10 - offset.x,
+                                           y: event.clientY - 10 - offset.y },
+                                orderItems: ["Beans", "Curry"]
+                              }
+                 );
+    },
+    orderButtonClick: function() {
+      console.log(this.fln)
+      console.log(this.em)
+      console.log(this.gender)
+      console.log(this.streetn)
+      console.log(this.housenum)
+      console.log(this.pm)
+      console.log(this.orderedBurgers)
+    },
+    addToOrder: function (event) {
+      this.orderedBurgers[event.name] = event.amount;
+    },
+  }
+}
+</script>
+
 <template>
 <!-- 
   <div>
@@ -19,7 +92,7 @@
         <h1> Welcome to Burgir Paradise </h1>
     </header>
 
-    <nav> Menu items </nav>
+    <!--<nav> Menu items </nav>-->
 
     <main>
       <section id="ourburgerssection">
@@ -30,7 +103,8 @@
           <div class="wrapper">
             <Burger v-for="burger in burgers" 
                     v-bind:burger="burger" 
-                    v-bind:key="burger.name" />
+                    v-bind:key="burger.name" 
+                    v-on:orderedBurger="addToOrder($event)" />
           </div>
       </section>
 
@@ -44,25 +118,25 @@
             <form>
                 <fieldset>
                     <p>
-                        <label for="firstlastname">Full name</label><br>
-                        <input type="text" id="firstlastname" name="fln" required="required"
-                            placeholder="First and last name">
+                        <label for="firstlastname">Full name: {{ fln }}</label><br>
+                        <input type="text" id="firstlastname" v-model="fln" required="required"
+                            placeholder="First and last name"/>
                     </p>
                     <p>
-                        <label for="email">E-mail</label><br>
-                        <input type="email" id="email" name="em" required="required" placeholder="E-mail address">
+                        <label for="email">E-mail: {{ em }}</label><br>
+                        <input type="email" id="email" v-model="em" required="required" placeholder="E-mail address"/>
                     </p>
                     <p>
-                        <label for="streetname">Street</label><br>
-                        <input type="text" id="streetname" name="streetn" placeholder="Street name">
+                        <label for="streetname">Street: {{ streetn }}</label><br>
+                        <input type="text" id="streetname" v-model="streetn" placeholder="Street name"/>
                     </p>
                     <p>
-                        <label for="housenumber">House</label><br>
-                        <input type="number" id="housenumber" name="housenum" placeholder="House number">
+                        <label for="housenumber">House: {{ housenum }}</label><br>
+                        <input type="number" id="housenumber" v-model="housenum" placeholder="House number"/>
                     </p>
                     <p>
-                        <label for="paymentmethod">Payment method</label>
-                        <select id="paymentmethod" name="pm">
+                        <label for="paymentmethod">Payment method: {{ pm }}</label><br>
+                        <select id="paymentmethod" v-model="pm">
                             <option>Swish</option>
                             <option selected="selected">Credit/debit card</option>
                             <option>Pay at dropoff</option>
@@ -71,31 +145,31 @@
                     </p>
 
                     <p>
-                        Gender
+                        Gender: {{ gender }}
                     </p>
 
                     <p>
-                        <input type="radio" id="male" name="gender" value="male" />
+                        <input type="radio" id="male" v-model="gender" value="Male" />
                         <label for="male">Male</label>
                     </p>
 
                     <p>
-                        <input type="radio" id="female" name="gender" value="female" />
+                        <input type="radio" id="female" v-model="gender" value="Female" />
                         <label for="female">Female</label>
                     </p>
 
                     <p>
-                        <input type="radio" id="nonbinary" name="gender" value="nonbinary" />
+                        <input type="radio" id="nonbinary" v-model="gender" value="Nonbinary" />
                         <label for="nonbinary">Non-binary</label>
                     </p>
 
                     <p>
-                        <input type="radio" id="other" name="gender" value="other" />
+                        <input type="radio" id="other" v-model="gender" value="Other" />
                         <label for="other">Other</label>
                     </p>
 
                 </fieldset>
-                <button type="submit">
+                <button v-on:click="orderButtonClick">
                     <img src="https://static.vecteezy.com/system/resources/previews/024/277/079/original/hamburger-fast-food-clipart-illustration-vector.jpg"
                         style="width: 25px">
                     Place my order!
@@ -112,56 +186,6 @@
 
 </template>
 
-<script>
-import Burger from '../components/OneBurger.vue'
-import io from 'socket.io-client'
-
-const socket = io();
-
-function MenuItem(nmpr, url, kl, desc, glu, lac) {
-  this.name = nmpr;
-  this.URL = url;
-  this.kCal = kl;
-  this.description = desc;
-  this.gluten = glu;
-  this.lactose = lac;
-}
-
-const burgerArray = [
-  new MenuItem("The Beast Burger", "https://www.solopress.com/blog/wp-content/uploads/2014/09/shutterstock_334960748.jpg",
-   360, "Our largest burger for our BEASTS" ,true, true),
-  new MenuItem("The Murder Burger", "https://emvwr2994ad.exactdn.com/wp-content/uploads/2014/11/burger-restaurants-stockholm-featured.jpg",
-   400, "Our spiciest burger for our SPICE lovers", true, false),
-  new MenuItem("The Monster Burger", "https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/416aaa9d7ed7b101e2d2672ab5d91e9b.jpg",
-   500, "Our burger with ONION RINGS", false, false)]
-  
-  export default {
-  name: 'HomeView',
-  components: {
-    Burger
-  },
-  data: function () {
-    return {
-      burgers: burgerArray
-    }
-  },
-  methods: {
-    getOrderNumber: function () {
-      return Math.floor(Math.random()*100000);
-    },
-    addOrder: function (event) {
-      var offset = {x: event.currentTarget.getBoundingClientRect().left,
-                    y: event.currentTarget.getBoundingClientRect().top};
-      socket.emit("addOrder", { orderId: this.getOrderNumber(),
-                                details: { x: event.clientX - 10 - offset.x,
-                                           y: event.clientY - 10 - offset.y },
-                                orderItems: ["Beans", "Curry"]
-                              }
-                 );
-    }
-  }
-}
-</script>
 
 <style>
 @import 'https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap';

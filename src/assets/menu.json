@@ -1,0 +1,26 @@
+[
+    {
+        "name": "The Beast Burger",
+        "kCal": 360,
+        "lactose": true,
+        "gluten": true,
+        "description": "Our largest burger for our BEASTS",
+        "URL": "https://www.solopress.com/blog/wp-content/uploads/2014/09/shutterstock_334960748.jpg"
+    },
+    {
+        "name": "The Murder Burger",
+        "kCal": 400,
+        "lactose": true,
+        "gluten": false,
+        "description": "Our spiciest burger for our SPICE lovers",
+        "URL": "https://emvwr2994ad.exactdn.com/wp-content/uploads/2014/11/burger-restaurants-stockholm-featured.jpg"
+    },
+    {
+        "name": "The Monster Burger",
+        "kCal": 500,
+        "lactose": false,
+        "gluten": false,
+        "description": "Our burger with ONION RINGS",
+        "URL": "https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/416aaa9d7ed7b101e2d2672ab5d91e9b.jpg"
+    }
+]
