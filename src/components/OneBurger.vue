@@ -23,9 +23,9 @@
       burger: Object
     },
     data: function () {
-    return {
-      amountOrdered: 0,
-    }
+      return {
+        amountOrdered: 0,
+      }
     },
     methods: {
       reduceAmount: function() {
@@ -70,7 +70,10 @@
     color: white;
     border-radius: 5px;
     padding: 10px;
+    font-size: 80%;
   }
+
+  
 
   </style>
   

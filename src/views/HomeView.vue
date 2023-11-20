@@ -35,58 +35,44 @@ const burgerArray = menu;
       fln: '',
       em: '',
       gender: '',
-      streetn: '',
-      housenum: '',
+      /* streetn: '',
+      housenum: '', */
       pm: 'Credit/debit card',      
       orderedBurgers: {},
+      location: {x: 0, y: 0}
     }
   },
   methods: {
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
-    addOrder: function (event) {
-      var offset = {x: event.currentTarget.getBoundingClientRect().left,
-                    y: event.currentTarget.getBoundingClientRect().top};
+    orderButtonClick: function() {
       socket.emit("addOrder", { orderId: this.getOrderNumber(),
-                                details: { x: event.clientX - 10 - offset.x,
-                                           y: event.clientY - 10 - offset.y },
-                                orderItems: ["Beans", "Curry"]
+                                details: {x: this.location.x,
+                                          y: this.location.y,
+                                          orderName: this.fln,
+                                          orderEmail: this.em,
+                                          orderGender: this.gender,
+                                          orderPayment: this.pm
+                                          },
+                                orderItems: this.orderedBurgers
                               }
                  );
-    },
-    orderButtonClick: function() {
-      console.log(this.fln)
-      console.log(this.em)
-      console.log(this.gender)
-      console.log(this.streetn)
-      console.log(this.housenum)
-      console.log(this.pm)
-      console.log(this.orderedBurgers)
     },
     addToOrder: function (event) {
       this.orderedBurgers[event.name] = event.amount;
     },
+    setLocation: function(event) {
+      var offset = {x: event.currentTarget.getBoundingClientRect().left,
+                    y: event.currentTarget.getBoundingClientRect().top};
+      this.location.x = event.clientX - 12 - offset.x
+      this.location.y = event.clientY - 12 - offset.y
+    }
   }
 }
 </script>
 
 <template>
-<!-- 
-  <div>
-    <div>
-      <h1>Burgers</h1>
-      <Burger v-for="burger in burgers"
-              v-bind:burger="burger" 
-              v-bind:key="burger.name" 
-              v-bind:URL="burger.img/>
-    </div>
-    <div id="map" v-on:click="addOrder">
-      click here
-    </div>
-  </div>
-  -->
-
     <header id="headersection">
         <img src="https://thatssotampa.com/wp-content/uploads/2023/03/BellaBrava_Header-1024x576.webp">
         <h1> Welcome to Burgir Paradise </h1>
@@ -114,18 +100,33 @@ const burgerArray = menu;
             <p> We need some of your information to be able to make the delivery.
                 Provide it below! </p>
 
+                <section id="map">
+                  <div id="target" v-bind:style="{ background: 'url(' + require('../../public/img/polacks.jpg')+ ')' }" v-on:click="setLocation($event)">
+                    <div v-bind:style="{ left: location.x + 'px', top: location.y + 'px'}">
+                      T
+                    </div> 
+                  </div>
+                </section>
+                    <!--<div id="target" v-bind:style="{ background: 'url(' + require('../../public/img/polacks.jpg')+ ')' }">
+                      <div v-for="(order, key) in orders" v-bind:key="'target' + key">
+                        {{ key }}
+                      </div>
+                    </div>
+                    -->
+                
+
             <!-- FORM -->
-            <form>
+            <form style="font-size: 80%">
                 <fieldset>
                     <p>
                         <label for="firstlastname">Full name: {{ fln }}</label><br>
-                        <input type="text" id="firstlastname" v-model="fln" required="required"
-                            placeholder="First and last name"/>
+                        <input type="text" id="firstlastname" v-model="fln" placeholder="First and last name"/>
                     </p>
                     <p>
                         <label for="email">E-mail: {{ em }}</label><br>
-                        <input type="email" id="email" v-model="em" required="required" placeholder="E-mail address"/>
+                        <input type="email" id="email" v-model="em" placeholder="E-mail address"/>
                     </p>
+                    <!--
                     <p>
                         <label for="streetname">Street: {{ streetn }}</label><br>
                         <input type="text" id="streetname" v-model="streetn" placeholder="Street name"/>
@@ -134,6 +135,7 @@ const burgerArray = menu;
                         <label for="housenumber">House: {{ housenum }}</label><br>
                         <input type="number" id="housenumber" v-model="housenum" placeholder="House number"/>
                     </p>
+                    -->
                     <p>
                         <label for="paymentmethod">Payment method: {{ pm }}</label><br>
                         <select id="paymentmethod" v-model="pm">
@@ -167,7 +169,7 @@ const burgerArray = menu;
                         <input type="radio" id="other" v-model="gender" value="Other" />
                         <label for="other">Other</label>
                     </p>
-
+                  
                 </fieldset>
                 <button v-on:click="orderButtonClick">
                     <img src="https://static.vecteezy.com/system/resources/previews/024/277/079/original/hamburger-fast-food-clipart-illustration-vector.jpg"
@@ -191,16 +193,16 @@ const burgerArray = menu;
 @import 'https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap';
 
 body {
-    font-family: oswald;
+  font-family: oswald;
+  font-size: 20px;
 }
 
-/*
 #map {
-  width: 300px;
-  height: 300px;
-  background-color: red;
+  overflow: scroll;
+  width: 100%;
+  height: 500px;
+  margin-bottom: 1em;
 }
-*/
 
 #ourburgerssection {
     color: white;
@@ -275,5 +277,26 @@ header > h1 {
     border-radius: 5px;
     padding: 10px;
 }
+
+#target {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    width:1920px;
+    height: 1078px;
+    cursor: crosshair;
+    font-size: 13px;
+  }
+
+#target div {
+    position: absolute;
+    background: black;
+    color: white;
+    border-radius: 10px;
+    width:20px;
+    height:20px;
+    text-align: center;
+  }
 
 </style>
