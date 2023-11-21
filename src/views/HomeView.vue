@@ -39,7 +39,10 @@ const burgerArray = menu;
       housenum: '', */
       pm: 'Credit/debit card',      
       orderedBurgers: {},
-      location: {x: 0, y: 0}
+      location: {x: 0, y: 0},
+      hasClicked: false,
+      locationError: false,
+      sendOrder: false
     }
   },
   methods: {
@@ -47,7 +50,9 @@ const burgerArray = menu;
       return Math.floor(Math.random()*100000);
     },
     orderButtonClick: function() {
-      socket.emit("addOrder", { orderId: this.getOrderNumber(),
+      if (this.hasClicked) {
+                this.sendOrder = true;
+                socket.emit("addOrder", { orderId: this.getOrderNumber(),
                                 details: {x: this.location.x,
                                           y: this.location.y,
                                           orderName: this.fln,
@@ -57,12 +62,18 @@ const burgerArray = menu;
                                           },
                                 orderItems: this.orderedBurgers
                               }
-                 );
+                 )
+                }
+      else {
+        this.locationError = true;
+      }
     },
     addToOrder: function (event) {
       this.orderedBurgers[event.name] = event.amount;
     },
     setLocation: function(event) {
+      this.hasClicked = true;
+      this.locationError = false;
       var offset = {x: event.currentTarget.getBoundingClientRect().left,
                     y: event.currentTarget.getBoundingClientRect().top};
       this.location.x = event.clientX - 12 - offset.x
@@ -99,7 +110,7 @@ const burgerArray = menu;
             <h2> Tell us about you </h2>
             <p> We need some of your information to be able to make the delivery.
                 Provide it below! </p>
-
+                
                 <section id="map">
                   <div id="target" v-bind:style="{ background: 'url(' + require('../../public/img/polacks.jpg')+ ')' }" v-on:click="setLocation($event)">
                     <div v-bind:style="{ left: location.x + 'px', top: location.y + 'px'}">
@@ -118,13 +129,16 @@ const burgerArray = menu;
             <!-- FORM -->
             <form style="font-size: 80%">
                 <fieldset>
+                    <p style="color:green" v-if="hasClicked"> Update: Location has been chosen </p>
+                    <p style="color:red" v-if="locationError"> Error: Location not chosen </p>
+
                     <p>
-                        <label for="firstlastname">Full name: {{ fln }}</label><br>
-                        <input type="text" id="firstlastname" v-model="fln" placeholder="First and last name"/>
+                        <label for="firstlastname">Full name:</label><br>
+                        <input type="text" id="firstlastname" required v-model="fln" placeholder="First and last name"/>
                     </p>
                     <p>
-                        <label for="email">E-mail: {{ em }}</label><br>
-                        <input type="email" id="email" v-model="em" placeholder="E-mail address"/>
+                        <label for="email">E-mail:</label><br>
+                        <input type="email" id="email" required v-model="em" placeholder="E-mail address"/>
                     </p>
                     <!--
                     <p>
@@ -137,7 +151,7 @@ const burgerArray = menu;
                     </p>
                     -->
                     <p>
-                        <label for="paymentmethod">Payment method: {{ pm }}</label><br>
+                        <label for="paymentmethod">Payment method:</label><br>
                         <select id="paymentmethod" v-model="pm">
                             <option>Swish</option>
                             <option selected="selected">Credit/debit card</option>
@@ -147,38 +161,46 @@ const burgerArray = menu;
                     </p>
 
                     <p>
-                        Gender: {{ gender }}
+                        Gender:
+                    </p>
+                    
+                    <p>
+                      <label>
+                        <input type="radio" name ="gender" v-model="gender" value="Male" required>Male
+                      </label>
                     </p>
 
                     <p>
-                        <input type="radio" id="male" v-model="gender" value="Male" />
-                        <label for="male">Male</label>
+                      <label>
+                        <input type="radio" name ="gender" v-model="gender" value="Female">Female
+                      </label>
                     </p>
 
                     <p>
-                        <input type="radio" id="female" v-model="gender" value="Female" />
-                        <label for="female">Female</label>
+                      <label>
+                        <input type="radio" name ="gender" v-model="gender" value="Non-binary">Non-binary
+                      </label>
                     </p>
 
                     <p>
-                        <input type="radio" id="nonbinary" v-model="gender" value="Nonbinary" />
-                        <label for="nonbinary">Non-binary</label>
-                    </p>
-
-                    <p>
-                        <input type="radio" id="other" v-model="gender" value="Other" />
-                        <label for="other">Other</label>
+                      <label>
+                        <input type="radio" name ="gender" v-model="gender" value="Other">Other
+                      </label>
                     </p>
                   
                 </fieldset>
-                <button v-on:click="orderButtonClick">
+                <button v-on:click.prevent="orderButtonClick">
                     <img src="https://static.vecteezy.com/system/resources/previews/024/277/079/original/hamburger-fast-food-clipart-illustration-vector.jpg"
                         style="width: 25px">
                     Place my order!
                 </button>
             </form>
         </section>
-
+        
+        <section v-if="sendOrder" id="sentOrderInfo">
+            <p> Order sent! Your order: </p>
+            <p style="font-size: 80%" v-for="(amount, burger) in orderedBurgers"> {{ burger }} x {{ amount }}</p>
+        </section>
     </main>
 
     <hr>
@@ -230,11 +252,13 @@ button:hover {
     border: none;
 }
 
-/* section {
+#sentOrderInfo {
+    color: white;
+    background-color: black;
     margin: 10px;
     border: 4px dotted white;
     padding: 8px;
-} */
+}
 
 button {
     margin-top: 20px;
